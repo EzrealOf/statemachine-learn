@@ -1,7 +1,7 @@
-package com.ezreal.statemachine.demo.config;
+package com.ezreal.statemachine.demo.demo.config;
 
-import com.ezreal.statemachine.demo.enums.Events;
-import com.ezreal.statemachine.demo.enums.States;
+import com.ezreal.statemachine.demo.demo.enums.Events;
+import com.ezreal.statemachine.demo.demo.enums.States;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.statemachine.config.EnableStateMachine;
