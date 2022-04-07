@@ -10,9 +10,17 @@ A year later, in 1956, Edward F. Moore presented another paper, in which he desc
 
 #什么是状态机
 
+### 相关demo
+spring-statemachine
+squirrel
+stateless4j
+easy-states
+
+
 
 
 参考文档
 - Java状态机调研报告 : https://juejin.cn/post/6844904170852450318
 - easy-states 地址: https://github.com/j-easy/easy-states
-- 
+- stateless4j 地址: https://github.com/stateless4j/stateless4j
+

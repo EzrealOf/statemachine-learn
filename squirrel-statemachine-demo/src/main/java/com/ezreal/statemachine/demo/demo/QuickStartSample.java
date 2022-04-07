@@ -9,7 +9,7 @@ import org.squirrelframework.foundation.fsm.impl.AbstractUntypedStateMachine;
 public class QuickStartSample {
 
 
-    // 1. Define State Machine Event
+    // 1. Define State Machine events
     enum FSMEvent {
         ToA, ToB, ToC, ToD
     }
