@@ -21,7 +21,7 @@ e.g.  投币式旋转门
 对应状态图如下
 ![旋转门状态变化](https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Turnstile_state_machine_colored.svg/660px-Turnstile_state_machine_colored.svg.png)
 状态 锁定 解锁
-初始状态
+初始状态 锁定
 
 动作 投币 推动
 行为 锁定 解锁
@@ -51,6 +51,16 @@ Easy States provides APIs for key concepts of state machines:
 - FiniteStateMachine: core abstraction of a finite state machine 
 - 
 ### feature
+
+### advantage
+上手简单 代码容易
+### Inferior position
+
+## stateless4j (starts 721)
+### description
+Lightweight Java State Machine
+
+
 
 
 

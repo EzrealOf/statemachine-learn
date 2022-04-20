@@ -1,4 +1,4 @@
-package com.ezreal.statemachine.demo.events;
+package com.ezreal.statemachine.sys.demo.events;
 
 import org.jeasy.states.api.AbstractEvent;
 

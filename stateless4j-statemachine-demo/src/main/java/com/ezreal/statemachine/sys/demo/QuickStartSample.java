@@ -1,7 +1,7 @@
-package com.ezreal.statemachine.demo;
+package com.ezreal.statemachine.sys.demo;
 
-import com.ezreal.statemachine.demo.enums.States;
-import com.ezreal.statemachine.demo.enums.Triggers;
+import com.ezreal.statemachine.sys.demo.enums.States;
+import com.ezreal.statemachine.sys.demo.enums.Triggers;
 import com.github.oxo42.stateless4j.StateMachine;
 import com.github.oxo42.stateless4j.StateMachineConfig;
 

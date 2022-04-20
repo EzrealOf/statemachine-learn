@@ -1,7 +1,7 @@
-package com.ezreal.statemachine.demo.demo;
+package com.ezreal.statemachine.sys.demo.demo;
 
-import com.ezreal.statemachine.demo.demo.enums.Events;
-import com.ezreal.statemachine.demo.demo.enums.States;
+import com.ezreal.statemachine.sys.demo.demo.enums.Events;
+import com.ezreal.statemachine.sys.demo.demo.enums.States;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;

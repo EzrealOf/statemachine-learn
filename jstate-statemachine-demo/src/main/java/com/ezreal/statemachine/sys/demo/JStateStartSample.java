@@ -1,7 +1,7 @@
-package com.ezreal.statemachine.demo;
+package com.ezreal.statemachine.sys.demo;
 
 
-import com.ezreal.statemachine.demo.enums.State;
+import com.ezreal.statemachine.sys.demo.enums.State;
 import unquietcode.tools.esm.EnumStateMachine;
 
 public class JStateStartSample {

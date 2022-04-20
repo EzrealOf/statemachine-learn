@@ -1,9 +1,9 @@
-package com.ezreal.statemachine.demo;
+package com.ezreal.statemachine.sys.demo;
 
-import com.ezreal.statemachine.demo.events.CoinEvent;
-import com.ezreal.statemachine.demo.events.PushEvent;
-import com.ezreal.statemachine.demo.lock.Lock;
-import com.ezreal.statemachine.demo.lock.Unlock;
+import com.ezreal.statemachine.sys.demo.events.CoinEvent;
+import com.ezreal.statemachine.sys.demo.events.PushEvent;
+import com.ezreal.statemachine.sys.demo.lock.Lock;
+import com.ezreal.statemachine.sys.demo.lock.Unlock;
 import org.jeasy.states.api.FiniteStateMachine;
 import org.jeasy.states.api.FiniteStateMachineException;
 import org.jeasy.states.api.State;

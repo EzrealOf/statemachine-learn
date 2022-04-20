@@ -1,4 +1,4 @@
-package com.ezreal.statemachine.demo.demo;
+package com.ezreal.statemachine.sys.demo.demo;
 
 import org.squirrelframework.foundation.fsm.StateMachineBuilderFactory;
 import org.squirrelframework.foundation.fsm.UntypedStateMachine;

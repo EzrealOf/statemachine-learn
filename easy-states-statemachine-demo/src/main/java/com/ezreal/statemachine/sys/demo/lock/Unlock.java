@@ -1,6 +1,6 @@
-package com.ezreal.statemachine.demo.lock;
+package com.ezreal.statemachine.sys.demo.lock;
 
-import com.ezreal.statemachine.demo.events.CoinEvent;
+import com.ezreal.statemachine.sys.demo.events.CoinEvent;
 import org.jeasy.states.api.EventHandler;
 
 import java.util.Date;
