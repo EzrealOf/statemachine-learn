@@ -5,12 +5,14 @@ import com.ezreal.statemachine.demo.events.PushEvent;
 import com.ezreal.statemachine.demo.lock.Lock;
 import com.ezreal.statemachine.demo.lock.Unlock;
 import org.jeasy.states.api.FiniteStateMachine;
+import org.jeasy.states.api.FiniteStateMachineException;
 import org.jeasy.states.api.State;
 import org.jeasy.states.api.Transition;
 import org.jeasy.states.core.FiniteStateMachineBuilder;
 import org.jeasy.states.core.TransitionBuilder;
 
 import java.util.HashSet;
+import java.util.Scanner;
 import java.util.Set;
 
 /**
@@ -35,7 +37,7 @@ public class QuickStartSample {
      * and four transitions: pushLocked, unlock, coinUnlocked and lock
      * @param args
      */
-    public static void main(String[] args) {
+    public static void main(String[] args) throws FiniteStateMachineException {
         //1. define states
         State locked = new State("locked");
         State unlocked = new State("unlocked");
@@ -48,43 +50,78 @@ public class QuickStartSample {
         //class PushEvent extends AbstractEvent { }
         //class CoinEvent extends AbstractEvent { }
 
-        //3.
-        Transition unlock = new TransitionBuilder()
-                .name("unlock")
+        //3. transitions
+        Transition lockedCoin = new TransitionBuilder()
+                .name("lockedCoin")
                 .sourceState(locked)
                 .eventType(CoinEvent.class)
                 .eventHandler(new Unlock())
                 .targetState(unlocked)
                 .build();
 
-        Transition pushLocked = new TransitionBuilder()
-                .name("pushLocked")
+
+        Transition lockedPush = new TransitionBuilder()
+                .name("lockedPush")
                 .sourceState(locked)
                 .eventType(PushEvent.class)
                 .targetState(locked)
                 .build();
 
-        Transition lock = new TransitionBuilder()
-                .name("lock")
+        Transition unlockCoin = new TransitionBuilder()
+                .name("unlockCoin")
+                .sourceState(unlocked)
+                .eventType(CoinEvent.class)
+                .targetState(unlocked)
+                .build();
+
+        Transition unlockPush = new TransitionBuilder()
+                .name("unlockPush")
                 .sourceState(unlocked)
                 .eventType(PushEvent.class)
                 .eventHandler(new Lock())
                 .targetState(locked)
                 .build();
 
-        Transition coinUnlocked = new TransitionBuilder()
-                .name("coinUnlocked")
-                .sourceState(unlocked)
-                .eventType(CoinEvent.class)
-                .targetState(unlocked)
+        FiniteStateMachine turnstileStateMachine = new FiniteStateMachineBuilder(states, locked)
+                .registerTransition(lockedCoin)
+                .registerTransition(lockedPush)
+                .registerTransition(unlockCoin)
+                .registerTransition(unlockPush)
                 .build();
 
-        FiniteStateMachine turnstileStateMachine = new FiniteStateMachineBuilder(states, locked)
-                .registerTransition(lock)
-                .registerTransition(pushLocked)
-                .registerTransition(unlock)
-                .registerTransition(coinUnlocked)
-                .build();
+
+
+        /*
+         * Fire some events and print FSM state
+         */
+        System.out.println("Turnstile initial state : " + turnstileStateMachine.getCurrentState().getName());
+
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Which event do you want to fire?");
+        System.out.println("1. Push [p]");
+        System.out.println("2. Coin [c]");
+        System.out.println("Press [q] to quit tutorial.");
+        while (true) {
+            String input = scanner.nextLine();
+            if (input.trim().equalsIgnoreCase("p")) {
+                System.out.println("input = " + input.trim());
+                System.out.println("Firing push event..");
+                turnstileStateMachine.fire(new PushEvent());
+                System.out.println("Turnstile state : " + turnstileStateMachine.getCurrentState().getName());
+            }
+            if (input.trim().equalsIgnoreCase("c")) {
+                System.out.println("input = " + input.trim());
+                System.out.println("Firing coin event..");
+                turnstileStateMachine.fire(new CoinEvent());
+                System.out.println("Turnstile state : " + turnstileStateMachine.getCurrentState().getName());
+            }
+            if (input.trim().equalsIgnoreCase("q")) {
+                System.out.println("input = " + input.trim());
+                System.out.println("Bye!");
+                System.exit(0);
+            }
+
+        }
 
     }
 

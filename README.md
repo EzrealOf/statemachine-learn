@@ -12,16 +12,49 @@ A year later, in 1956, Edward F. Moore presented another paper, in which he desc
 概念
 有限状态机(FSM)或有限状态自动机(FSA，复数：自动机)、有限自动机或简称状态机是计算的数学模型。它是一台抽象的机器，在任何给定的时间都可以处于有限数量的状态之一。
 FSM可以根据某些输入从一种状态转换到另一种状态；从一种状态到另一种状态的变化称为转换。FSM由其状态、初始状态和触发每个转换的输入的列表定义。
+1. 状态
+2. 初始状态
+3. 触发每个转换的输入的列表定义
+
 e.g.  投币式旋转门
 用于控制通往地铁和游乐园游乐设施的旋转门是一个大门，它有三个与腰部齐高的旋转臂，一个横跨入口。最初，手臂是锁着的，挡住了入口，防止顾客通过。将一枚硬币或代币放在旋转栅门上的狭缝中，就可以解锁手臂，允许一个顾客推过去。在顾客通过后，手臂再次锁定，直到另一枚硬币被插入。
+对应状态图如下
 ![旋转门状态变化](https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Turnstile_state_machine_colored.svg/660px-Turnstile_state_machine_colored.svg.png)
+状态 锁定 解锁
+初始状态
+
+动作 投币 推动
+行为 锁定 解锁
+
+触发每个转换的输入的列表定义  锁定投币  锁定推动 解锁投币 解锁推动
+
+
+
+
 
 
 # 相应的框架
+## spring-statemachine
+description
 feature
-how
+
 advantage
 Inferior position
+
+## easy states  (starts 187)
+### description
+The simple, stupid finite state machine for Java™
+Easy States provides APIs for key concepts of state machines:
+- State: a particular state on which the machine can be at a given point in time
+- Event: represents an event that may trigger an action and change the state of the machine
+- Transition: represents a transition between two states of the machine when an event occurs
+- FiniteStateMachine: core abstraction of a finite state machine 
+- 
+### feature
+
+
+
+
 
 
 
