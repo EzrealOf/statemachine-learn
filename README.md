@@ -10,6 +10,7 @@ A year later, in 1956, Edward F. Moore presented another paper, in which he desc
 
 #什么是状态机
 
+
 ### 相关demo
 spring-statemachine
 squirrel
