@@ -5,13 +5,7 @@ import com.ezreal.statemachine.ext.demo.enums.TurnstileTriggers;
 import com.ezreal.statemachine.ext.demo.events.TurnstileEvents;
 import com.github.oxo42.stateless4j.StateMachine;
 import com.github.oxo42.stateless4j.StateMachineConfig;
-import com.github.oxo42.stateless4j.delegates.Action;
-import com.github.oxo42.stateless4j.delegates.Action1;
-import com.github.oxo42.stateless4j.delegates.Action2;
-import com.github.oxo42.stateless4j.transitions.Transition;
 
-import javax.swing.*;
-import java.util.Objects;
 import java.util.Scanner;
 
 public class ExtStartSample {
@@ -21,7 +15,7 @@ public class ExtStartSample {
 
         TurnstileConfig.configure(TurnstileStates.Locked)
                 .permit(TurnstileTriggers.LockCoin, TurnstileStates.UNLOCKED)
-//                .ignore(TurnstileTriggers.LockPush)
+                .ignore(TurnstileTriggers.LockPush)
                 .onEntry(TurnstileEvents.coinEvent());
 //                .onEntryFrom(TurnstileTriggers.LockCoin, new Action() {
 //                    @Override
@@ -36,10 +30,8 @@ public class ExtStartSample {
 
         TurnstileConfig.configure(TurnstileStates.UNLOCKED)
                 .permit(TurnstileTriggers.UnlockPush, TurnstileStates.Locked)
-                .onExit(TurnstileEvents.pushEvent());
-
-        TurnstileConfig.configure(TurnstileStates.UNLOCKED)
                 .ignore(TurnstileTriggers.UnlockCoin);
+//                .onExit(TurnstileEvents.pushEvent());
 
         StateMachine<TurnstileStates, TurnstileTriggers> stateMachine =
                 new StateMachine<>(TurnstileStates.Locked, TurnstileConfig);
@@ -77,9 +69,6 @@ public class ExtStartSample {
             }
 
         }
-
-
-
 
 
     }
