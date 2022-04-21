@@ -37,6 +37,11 @@ public class QuickStartSample {
                 new StateMachine<>(States.OffHook, phoneCallConfig);
 
         phoneCall.fire(Triggers.CallDialed);
+        System.out.println(phoneCall.getState());
+        phoneCall.fire(Triggers.CallConnected);
+        System.out.println(phoneCall.getState());
+        phoneCall.fire(Triggers.LeftMessage);
+        System.out.println(phoneCall.getState());
 
     }
 

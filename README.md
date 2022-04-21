@@ -60,6 +60,11 @@ Easy States provides APIs for key concepts of state machines:
 ### description
 Lightweight Java State Machine
 
+### demo
+存在的问题
+1. 在非法的请求中会抛出异常
+2. 在coin 的 事件中输出事件不一致
+
 
 
 
