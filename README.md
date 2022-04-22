@@ -71,26 +71,44 @@ e.g.  投币式旋转门
 
 
 ### 特点
-Entry/exit events for states
+- 基于参数的状态跳转
 
-### 结构
+- 提供状态的进入和退出扩展点
 
-![image-20220422160637747](README.assets/image-20220422160637747.png)
+- 初始化状态流转时，提供了保护措施。
 
+- 支持子状态机
+
+  
+
+### 劣势
+
+- 对于未定义的状态流转会抛出异常
+- 不允许相同触发器执行多个行为。
 
 
 
 ### demo
-存在的问题
-1. 在非法的请求中会抛出异常
+
+- 基于参数的状态跳转（DynamicTriggerTests）
+
+- 父子状态下前置扩展点的进入条件（InitialStateEntryTest）
+
+- 自我状态的自旋不会触发 进入和退出 但是在初始化时会调用进入方法 （InternalTransitionActionTests#ExitAndEntryAreNotPerformed）
+
+- 初始化状态流转时，提供了保护措施。不允许的状态流转会抛出 IllegalStateException 异常 （InternalTransitionActionTests#ActionWithNegativeGuardIsNotPerformed）
+
+  
 
 
 ## JSate (starts 91)
 
-### description
-A core Java tool which provides state machine semantics using enums, strings, or anything else you want to represent the various states.
+### 描述
+一种核心Java工具，它使用枚举、字符串或任何您想要表示各种状态的东西来提供状态机语义。
 
-### feature
+### 特点
+
+
 
 
 ## squirrel (starts 1.9k)
