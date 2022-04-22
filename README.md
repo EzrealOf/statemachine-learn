@@ -20,13 +20,13 @@ e.g.  投币式旋转门
 用于控制通往地铁和游乐园游乐设施的旋转门是一个大门，它有三个与腰部齐高的旋转臂，一个横跨入口。最初，手臂是锁着的，挡住了入口，防止顾客通过。将一枚硬币或代币放在旋转栅门上的狭缝中，就可以解锁手臂，允许一个顾客推过去。在顾客通过后，手臂再次锁定，直到另一枚硬币被插入。
 对应状态图如下
 ![旋转门状态变化](https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Turnstile_state_machine_colored.svg/660px-Turnstile_state_machine_colored.svg.png)
-状态 锁定 解锁
-初始状态 锁定
+状态:  锁定 解锁
+初始状态 : 锁定
 
-动作 投币 推动
-行为 锁定 解锁
+动作: 投币 推动
+行为: 锁定 解锁
 
-触发每个转换的输入的列表定义  锁定投币  锁定推动 解锁投币 解锁推动
+触发每个转换的输入的列表定义:  锁定投币  锁定推动 解锁投币 解锁推动
 
 
 
@@ -35,34 +35,50 @@ e.g.  投币式旋转门
 
 # 相应的框架
 ## spring-statemachine
-description
-feature
+描述
+特点
 
-advantage
-Inferior position
+优势
+劣势
 
 ## easy states  (starts 187)
-### description
-The simple, stupid finite state machine for Java™
-Easy States provides APIs for key concepts of state machines:
-- State: a particular state on which the machine can be at a given point in time
-- Event: represents an event that may trigger an action and change the state of the machine
-- Transition: represents a transition between two states of the machine when an event occurs
-- FiniteStateMachine: core abstraction of a finite state machine 
-- 
-### feature
+### 描述
 
-### advantage
-上手简单 代码容易
-### Inferior position
+简单并且易上手的状态机模型
+
+简单的状态机模型API提供了状态机的核心概念
+
+- 状态：机器可以处于给定时间点的一种特定状态
+- 事件：表示可能触发操作并更改计算机状态的事件
+- 过度: 表示发生事件时计算机的两个状态之间的转换
+- 有限状态机: 有限状态机的核心抽象
+
+### 特点
+
+- 简单易上手
+
+### 优势
+- 上手简单
+- 代码容易
+
+### 劣势
+
+- 只是状态机的基本概念对于复杂的场景支持力度不够
 
 ## stateless4j (starts 721)
-### description
-Lightweight Java State Machine
+### 描述
+轻量级状态机
 
 
-### feature
-Entry/exit events for states 
+### 特点
+Entry/exit events for states
+
+### 结构
+
+![image-20220422160637747](README.assets/image-20220422160637747.png)
+
+
+
 
 ### demo
 存在的问题
@@ -70,6 +86,20 @@ Entry/exit events for states
 
 
 ## JSate (starts 91)
+
+### description
+A core Java tool which provides state machine semantics using enums, strings, or anything else you want to represent the various states.
+
+### feature
+
+
+## squirrel (starts 1.9k)
+squirrel-foundation is a State Machine library, which provided a lightweight, easy use, type safe and programmable state machine implementation for Java.
+### feature
+
+
+## spring-statemachine
+
 
 
 
@@ -91,9 +121,12 @@ JState
 
 
 参考文档
-- Java状态机调研报告 : https://juejin.cn/post/6844904170852450318
-- uml2.4 状态机图解 : https://www.uml-diagrams.org/state-machine-diagrams.html
-- 有限状态机 wiki百科 :  https://en.wikipedia.org/wiki/Finite-state_machine
+- Java状态机调研报告: https://juejin.cn/post/6844904170852450318
+- uml2.4 状态机图解: https://www.uml-diagrams.org/state-machine-diagrams.html
+- 有限状态机 wiki百科:  https://en.wikipedia.org/wiki/Finite-state_machine
 - easy-states 地址: https://github.com/j-easy/easy-states
 - stateless4j 地址: https://github.com/stateless4j/stateless4j
+- jSate 地址: https://github.com/UnquietCode/JState
+- squirrel 地址: http://hekailiang.github.io/squirrel
+- spring-statemachine 地址: https://spring.io/projects/spring-statemachine
 
