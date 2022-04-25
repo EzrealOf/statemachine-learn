@@ -4,14 +4,16 @@
 
 The concept of a state machine is most likely older than any reader of this reference documentation and definitely older than the Java language itself.
 Description of finite automata dates back to 1943 when gentlemen Warren McCulloch and Walter Pitts wrote a paper about it. Later George H. Mealy presented a state machine concept (known as a “Mealy Machine”) in 1955.
+
 A year later, in 1956, Edward F. Moore presented another paper, in which he described what is known as a “Moore Machine”. If you have ever read anything about state machines, the names, Mealy and Moore, should have popped up at some point.
-----
+
 状态机的概念很可能比本参考文档的任何读者都要老，而且肯定比Java语言本身还要老。对有限自动机的描述可以追溯到1943年，当时沃伦·麦卡洛克(Warren McCulloch)和沃尔特·皮茨(Walter Pitts)先生写了一篇关于它的论文。后来乔治·H·米利在1955年提出了状态机的概念(称为“米利机”)。一年后，也就是1956年，爱德华·F·摩尔发表了另一篇论文，在论文中他描述了被称为“摩尔机”的东西。如果你曾经读过关于状态机的任何东西，那么米利和摩尔这两个名字应该会在某个时候出现。
 
 # 什么是状态机
 概念
 有限状态机(FSM)或有限状态自动机(FSA，复数：自动机)、有限自动机或简称状态机是计算的数学模型。它是一台抽象的机器，在任何给定的时间都可以处于有限数量的状态之一。
 FSM可以根据某些输入从一种状态转换到另一种状态；从一种状态到另一种状态的变化称为转换。FSM由其状态、初始状态和触发每个转换的输入的列表定义。
+
 1. 状态
 2. 初始状态
 3. 触发每个转换的输入的列表定义
@@ -101,26 +103,84 @@ e.g.  投币式旋转门
   
 
 
-## JSate (starts 91)
-
-### 描述
-一种核心Java工具，它使用枚举、字符串或任何您想要表示各种状态的东西来提供状态机语义。
-
-### 特点
 
 
 
 
 ## squirrel (starts 1.9k)
-squirrel-foundation is a State Machine library, which provided a lightweight, easy use, type safe and programmable state machine implementation for Java.
-### feature
+squirrel提供了简单易用，类型安全和高扩展的状态机
+
+### 特点
+
+- 提供了 状态进入和退出的扩展点
+
+- 根据参数调用不同事件进行流转
+
+- 提供根据状态机转变的方法，并且提供自定义接口方法
+
+- 提供声明试的状态机定义
+
+- 提供触发器对于状态的流转
+
+- 支持状态机的嵌套（提供了父级状态和子状态的概念）（提供了是否进入子状态的注释）
+
+- 支持定义开始/中断/结束事件
+
+- 提供了过渡的三种定义（内连，本地，扩展）
+
+- 提供事件的监听
+
+- 提供异步注释来进行异步任务
+
+  
+
+### 劣势
+
+- 定义的一些状态机中的调用方法是用的是方法名称。会增大代码阅读的难度，不利于维护
+
+- 定义的方法需要按照命名规则来定义
+
+  ```
+   transitFrom[fromStateName]To[toStateName]On[eventName]When[conditionName]  
+   transitFrom[fromStateName]To[toStateName]On[eventName]  
+   transitFromAnyTo[toStateName]On[eventName]  
+   transitFrom[fromStateName]ToAnyOn[eventName]  
+   transitFrom[fromStateName]To[toStateName]          
+   on[eventName] 
+  ```
+
+  
+
+### demo
+
+- 状态机的流转（QuickStartSample）
+- 基于参数的状态跳转（DecisionStateSampleTest）
+- 父子状态机（ParallelStateMachineTest）
+- 异常处理（StateMachineExceptionTest）
+- 监听器 （UntypedStateMachineTest）（StateMachineContextTest）
+- 触发器
 
 
-## spring-statemachine
 
 
 
 
+
+
+
+
+
+
+
+
+
+## JSate (starts 91)
+
+### 描述
+
+一种核心Java工具，它使用枚举、字符串或任何您想要表示各种状态的东西来提供状态机语义。
+
+### 特点
 
 
 
@@ -138,7 +198,7 @@ JState
 
 
 
-参考文档
+# 参考文档
 - Java状态机调研报告: https://juejin.cn/post/6844904170852450318
 - uml2.4 状态机图解: https://www.uml-diagrams.org/state-machine-diagrams.html
 - 有限状态机 wiki百科:  https://en.wikipedia.org/wiki/Finite-state_machine
