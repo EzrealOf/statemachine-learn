@@ -36,12 +36,9 @@ e.g.  投币式旋转门
 
 
 # 相应的框架
-## spring-statemachine
-描述
-特点
+### 
 
-优势
-劣势
+
 
 ## easy states  (starts 187)
 ### 描述
@@ -66,6 +63,10 @@ e.g.  投币式旋转门
 ### 劣势
 
 - 只是状态机的基本概念对于复杂的场景支持力度不够
+
+### demo
+
+投币式旋转门（QuickStartSample）
 
 ## stateless4j (starts 721)
 ### 描述
@@ -158,17 +159,41 @@ squirrel提供了简单易用，类型安全和高扩展的状态机
 - 父子状态机（ParallelStateMachineTest）
 - 异常处理（StateMachineExceptionTest）
 - 监听器 （UntypedStateMachineTest）（StateMachineContextTest）
-- 触发器
+- 触发器 
+
+## spring-statemachine
+
+描述
+
+Spring应用程序中使用传统状态机概念的框架
+
+特点
+
+- 用于简单用例的易于使用的平面(单级)状态机。
+- 分层状态机结构，简化复杂的状态配置。
+- 状态机区域，以提供更复杂的状态配置。
+- 触发器、转换、保护和操作的使用。
+- 类型安全配置适配器。
+- 状态机事件监听器。
+- 将Bean与状态机相关联的Spring IoC集成。
+
+优势
+
+- 
 
 
 
+劣势
+
+- 状态机是提供的单例
 
 
 
+### demo
 
+投币式旋转门（TurnstileApplication）
 
-
-
+洗衣机（Washer）
 
 
 

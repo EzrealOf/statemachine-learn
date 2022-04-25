@@ -23,6 +23,7 @@
         <spring-statemachine.version>3.0.1</spring-statemachine.version>
     </properties>
 
+
     <dependencies>
         <dependency>
             <groupId>org.springframework.statemachine</groupId>
