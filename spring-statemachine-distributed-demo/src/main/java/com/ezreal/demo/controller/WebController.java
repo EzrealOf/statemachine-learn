@@ -1,11 +1,17 @@
 package com.ezreal.demo.controller;
 
 
+import com.ezreal.demo.entity.CouponContext;
 import com.ezreal.demo.eunms.Events;
 import com.ezreal.demo.eunms.States;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.datasource.DataSourceTransactionManager;
+import org.springframework.messaging.Message;
+import org.springframework.messaging.support.MessageBuilder;
 import org.springframework.statemachine.StateMachine;
 import org.springframework.statemachine.persist.StateMachinePersister;
+import org.springframework.transaction.TransactionStatus;
+import org.springframework.transaction.support.DefaultTransactionDefinition;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -16,8 +22,9 @@ public class WebController {
     private StateMachine<States, Events> stateMachine;
 
     @Autowired
-    private StateMachinePersister<States, Events, String> stateMachinePersister;
-
+    private StateMachinePersister<States, Events, CouponContext> stateMachinePersister;
+    @Autowired
+    private DataSourceTransactionManager dataSourceTransactionManager;
 
 
     @GetMapping("/")
@@ -27,41 +34,50 @@ public class WebController {
 
     @GetMapping("/change")
     public String change(String id, String change) {
+        DefaultTransactionDefinition def = new DefaultTransactionDefinition();
+        TransactionStatus transaction = dataSourceTransactionManager.getTransaction(def);
+        CouponContext couponContext = new CouponContext();
+        couponContext.setCouponCode(id);
 
         try {
-            StateMachine<States, Events> statesEventsStateMachine = resetStateMachineFromStore(id);
 
-            switch (change){
+
+            StateMachine<States, Events> statesEventsStateMachine = resetStateMachineFromStore(couponContext);
+
+            switch (change) {
                 case "1":
                     //业务代码
-                    feedMachine(id, Events.FROZENING);
+                    feedMachine(couponContext, Events.FROZENING);
                     break;
                 case "2":
-                    feedMachine(id, Events.USEING);
+                    feedMachine(couponContext, Events.USEING);
                     break;
                 case "3":
-                    feedMachine(id, Events.END);
+                    feedMachine(couponContext, Events.END);
                     break;
                 case "4":
-                    feedMachine(id, Events.ROLLBACK);
+                    feedMachine(couponContext, Events.ROLLBACK);
                     break;
                 default:
                     break;
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            dataSourceTransactionManager.rollback(transaction);
+        } finally {
+            dataSourceTransactionManager.commit(transaction);
         }
 
         return "ok";
 
     }
 
-    private StateMachine<States, Events> resetStateMachineFromStore(String coupon) throws Exception {
-        return stateMachinePersister.restore(stateMachine,  coupon);
+    private StateMachine<States, Events> resetStateMachineFromStore(CouponContext context) throws Exception {
+        return stateMachinePersister.restore(stateMachine, context);
     }
 
-    private void feedMachine(String user, Events id) throws Exception {
-        stateMachine.sendEvent(id);
-        stateMachinePersister.persist(stateMachine,  user);
+    private void feedMachine(CouponContext context, Events id) throws Exception {
+        Message<Events> build = MessageBuilder.withPayload(id).setHeader("context", context).build();
+        stateMachine.sendEvent(build);
+        stateMachinePersister.persist(stateMachine, context);
     }
 }

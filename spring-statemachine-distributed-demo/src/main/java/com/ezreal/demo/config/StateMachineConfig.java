@@ -1,7 +1,10 @@
 package com.ezreal.demo.config;
 
+import com.ezreal.demo.action.CouponAction;
+import com.ezreal.demo.entity.CouponContext;
 import com.ezreal.demo.eunms.Events;
 import com.ezreal.demo.eunms.States;
+import com.ezreal.demo.guard.CouponGuard;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -10,13 +13,9 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.statemachine.StateContext;
 import org.springframework.statemachine.StateMachine;
 import org.springframework.statemachine.action.Action;
-import org.springframework.statemachine.config.EnableStateMachine;
 import org.springframework.statemachine.config.StateMachineBuilder;
-import org.springframework.statemachine.config.StateMachineConfigurerAdapter;
-import org.springframework.statemachine.config.builders.StateMachineTransitionConfigurer;
 import org.springframework.statemachine.persist.DefaultStateMachinePersister;
 import org.springframework.statemachine.persist.StateMachinePersister;
-import org.springframework.statemachine.persist.StateMachineRuntimePersister;
 
 import java.util.EnumSet;
 
@@ -26,6 +25,14 @@ public class StateMachineConfig {
 
     @Autowired
     CouponStateMachinePersist couponStateMachinePersist;
+
+    @Autowired
+    CouponAction couponAction;
+
+    @Autowired
+    CouponGuard couponGuard;
+    @Autowired
+    private CouponLister couponLister;
 
 
     @Bean(name = "stateMachineTarget")
@@ -45,25 +52,45 @@ public class StateMachineConfig {
         builder.configureTransitions()
                 .withExternal()
                 .source(States.UN_USED).target(States.FROZEN)
-                .action(pageviewAction())
+                .guard(couponGuard)
+                .action(couponAction)
                 .event(Events.FROZENING)
+
+
                 .and()
                 .withExternal()
                 .source(States.FROZEN).target(States.USED)
+                .guard(couponGuard)
                 .action(pageviewAction())
                 .event(Events.USEING)
+
+
                 .and()
                 .withExternal()
                 .source(States.USED).target(States.END)
+                .guard(couponGuard)
                 .action(pageviewAction())
                 .event(Events.END)
+
+
                 .and()
                 .withExternal()
                 .source(States.USED).target(States.UN_USED)
+                .guard(couponGuard)
                 .action(pageviewAction())
-                .event(Events.ROLLBACK);
+                .event(Events.ROLLBACK)
+                // TODO: 2022/4/28 对于选择的 并不是事件触发的 那其实可以通过参数来调用不同的事件来触发
 
-        return builder.build();
+                .and()
+                .withChoice()
+                .source(States.UN_USED)
+                .first(States.FROZEN, couponGuard, couponAction)
+                .then(States.END,couponGuard);
+
+
+        StateMachine<States, Events> build = builder.build();
+        build.addStateListener(couponLister);
+        return build;
     }
 
     @Bean
@@ -72,14 +99,14 @@ public class StateMachineConfig {
 
             @Override
             public void execute(StateContext<States, Events> context) {
-               log.info("-----------context"+context.getSources().toString() + ":"+context.getTarget().toString());
+                log.info("pageviewAction start");
             }
         };
     }
 
     @Bean
-    public StateMachinePersister<States, Events, String> stateMachineRuntimePersister() {
-        return new DefaultStateMachinePersister<States, Events, String>(couponStateMachinePersist);
+    public StateMachinePersister<States, Events, CouponContext> stateMachineRuntimePersister() {
+        return new DefaultStateMachinePersister<States, Events, CouponContext>(couponStateMachinePersist);
     }
 
 }
