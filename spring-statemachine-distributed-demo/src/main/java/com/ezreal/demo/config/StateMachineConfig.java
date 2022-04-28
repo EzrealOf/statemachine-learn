@@ -2,6 +2,7 @@ package com.ezreal.demo.config;
 
 import com.ezreal.demo.eunms.Events;
 import com.ezreal.demo.eunms.States;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -19,30 +20,13 @@ import org.springframework.statemachine.persist.StateMachineRuntimePersister;
 
 import java.util.EnumSet;
 
+@Slf4j
 @Configuration
-@EnableStateMachine
-public class StateMachineConfig extends StateMachineConfigurerAdapter<String, String> {
+public class StateMachineConfig {
 
     @Autowired
     CouponStateMachinePersist couponStateMachinePersist;
 
-
-//    @Override
-//    public void configure(StateMachineTransitionConfigurer<String, String> transitions)
-//            throws Exception {
-//        transitions
-//                .withExternal()
-//                .source(States.UN_USED.name()).target(States.FROZEN.name())
-//                .event("FROZENING")
-//                .and()
-//                .withExternal()
-//                .source(States.FROZEN.name()).target(States.USED.name())
-//                .event("USEING")
-//                .and()
-//                .withExternal()
-//                .source(States.USED.name()).target(States.END.name())
-//                .event("END");
-//    }
 
     @Bean(name = "stateMachineTarget")
     @Scope(scopeName = "prototype")
@@ -88,13 +72,7 @@ public class StateMachineConfig extends StateMachineConfigurerAdapter<String, St
 
             @Override
             public void execute(StateContext<States, Events> context) {
-                String variable = context.getTarget().getId().toString();
-                Integer count = context.getExtendedState().get(variable, Integer.class);
-                if (count == null) {
-                    context.getExtendedState().getVariables().put(variable, 1);
-                } else {
-                    context.getExtendedState().getVariables().put(variable, (count + 1));
-                }
+               log.info("-----------context"+context.getSources().toString() + ":"+context.getTarget().toString());
             }
         };
     }

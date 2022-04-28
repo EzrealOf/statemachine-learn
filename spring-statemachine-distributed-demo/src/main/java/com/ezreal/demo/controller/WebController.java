@@ -19,6 +19,7 @@ public class WebController {
     private StateMachinePersister<States, Events, String> stateMachinePersister;
 
 
+
     @GetMapping("/")
     public String helloWorld() {
         return "hello World!";
@@ -32,6 +33,7 @@ public class WebController {
 
             switch (change){
                 case "1":
+                    //业务代码
                     feedMachine(id, Events.FROZENING);
                     break;
                 case "2":
@@ -55,11 +57,11 @@ public class WebController {
     }
 
     private StateMachine<States, Events> resetStateMachineFromStore(String coupon) throws Exception {
-        return stateMachinePersister.restore(stateMachine, "testprefix:" + coupon);
+        return stateMachinePersister.restore(stateMachine,  coupon);
     }
 
     private void feedMachine(String user, Events id) throws Exception {
         stateMachine.sendEvent(id);
-        stateMachinePersister.persist(stateMachine, "testprefix:" + user);
+        stateMachinePersister.persist(stateMachine,  user);
     }
 }
