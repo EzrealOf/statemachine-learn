@@ -14,6 +14,7 @@
         <module>spring-statemachine-demo</module>
         <module>easy-states-statemachine-demo</module>
         <module>jState-statemachine-demo</module>
+        <module>spring-statemachine-distributed-demo</module>
     </modules>
 
 </project>

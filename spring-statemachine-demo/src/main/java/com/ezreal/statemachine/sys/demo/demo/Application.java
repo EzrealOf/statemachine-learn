@@ -9,7 +9,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.statemachine.StateMachine;
 
 @SpringBootApplication
-public class Application implements CommandLineRunner {
+public class Application  {
     @Autowired
     private StateMachine<States, Events> stateMachine;
 
@@ -18,8 +18,6 @@ public class Application implements CommandLineRunner {
         SpringApplication.run(Application.class, args);
     }
 
-
-    @Override
     public void run(String... args) throws Exception {
         stateMachine.sendEvent(Events.E1);
         stateMachine.sendEvent(Events.E2);
