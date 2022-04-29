@@ -32,7 +32,9 @@ public class CouponLister extends StateMachineListenerAdapter<States, Events> {
 
     @Override
     public void eventNotAccepted(Message<Events> event) {
+
         log.info("----eventNotAccepted----");
+//        throw new RuntimeException(event.getHeaders().toString());
     }
 
     @Override
@@ -63,6 +65,8 @@ public class CouponLister extends StateMachineListenerAdapter<States, Events> {
     @Override
     public void stateMachineError(StateMachine<States, Events> stateMachine, Exception exception) {
         log.info("----stateMachineError----");
+//        stateMachine.setStateMachineError(exception);
+        throw new RuntimeException(exception);
     }
 
     @Override
@@ -72,6 +76,6 @@ public class CouponLister extends StateMachineListenerAdapter<States, Events> {
 
     @Override
     public void stateContext(StateContext<States, Events> stateContext) {
-        log.info("----stateContext----");
+        log.info("----stateContext----{}", stateContext);
     }
 }

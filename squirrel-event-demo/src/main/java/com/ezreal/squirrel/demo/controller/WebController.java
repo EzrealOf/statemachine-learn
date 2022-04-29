@@ -1,30 +1,30 @@
-package com.ezreal.demo.controller;
+package com.ezreal.squirrel.demo.controller;
 
 
-import com.ezreal.demo.entity.CouponContext;
-import com.ezreal.demo.eunms.Events;
-import com.ezreal.demo.eunms.States;
+import com.ezreal.squirrel.demo.config.CouponStatemachineFactory;
+import com.ezreal.squirrel.demo.dao.CouponDao;
+import com.ezreal.squirrel.demo.entity.CouponContext;
+import com.ezreal.squirrel.demo.entity.CouponDO;
+import com.ezreal.squirrel.demo.eunms.Events;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
-import org.springframework.messaging.Message;
-import org.springframework.messaging.support.MessageBuilder;
-import org.springframework.statemachine.StateMachine;
-import org.springframework.statemachine.persist.StateMachinePersister;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.DefaultTransactionDefinition;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.squirrelframework.foundation.fsm.StateMachine;
 
 @RestController
 public class WebController {
 
     @Autowired
-    private StateMachine<States, Events> stateMachine;
+    private CouponStatemachineFactory couponStatemachineFactory;
 
     @Autowired
-    private StateMachinePersister<States, Events, CouponContext> stateMachinePersister;
-    @Autowired
     private DataSourceTransactionManager dataSourceTransactionManager;
+
+    @Autowired
+    private CouponDao couponDao;
 
 
     @GetMapping("/")
@@ -41,8 +41,6 @@ public class WebController {
 
         try {
 
-
-            StateMachine<States, Events> statesEventsStateMachine = resetStateMachineFromStore(couponContext);
 
             switch (change) {
                 case "1":
@@ -71,17 +69,13 @@ public class WebController {
 
     }
 
-    private StateMachine<States, Events> resetStateMachineFromStore(CouponContext context) throws Exception {
-        return stateMachinePersister.restore(stateMachine, context);
-    }
 
     private void feedMachine(CouponContext context, Events id) throws Exception {
-        Message<Events> build = MessageBuilder.withPayload(id).setHeader("context", context).build();
-        stateMachine.sendEvent(build);
-        if (stateMachine.hasStateMachineError()) {
-            System.out.println("123");
-            throw new RuntimeException("324");
-        }
-        stateMachinePersister.persist(stateMachine, context);
+        StateMachine stateMachine = couponStatemachineFactory.buildStateMachine(context.getCouponCode());
+
+        CouponDO couponDO = couponDao.selectById(context.getCouponDO());
+        context.setCouponDO(couponDO);
+        stateMachine.fire(id, context);
+
     }
 }
