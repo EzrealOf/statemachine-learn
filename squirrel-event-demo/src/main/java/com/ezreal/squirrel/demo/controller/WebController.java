@@ -6,6 +6,7 @@ import com.ezreal.squirrel.demo.dao.CouponDao;
 import com.ezreal.squirrel.demo.entity.CouponContext;
 import com.ezreal.squirrel.demo.entity.CouponDO;
 import com.ezreal.squirrel.demo.eunms.Events;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.transaction.TransactionStatus;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.squirrelframework.foundation.fsm.StateMachine;
 
+@Slf4j
 @RestController
 public class WebController {
 
@@ -73,9 +75,13 @@ public class WebController {
     private void feedMachine(CouponContext context, Events id) throws Exception {
         StateMachine stateMachine = couponStatemachineFactory.buildStateMachine(context.getCouponCode());
 
-        CouponDO couponDO = couponDao.selectById(context.getCouponDO());
+        CouponDO couponDO = couponDao.selectById(context.getCouponCode());
         context.setCouponDO(couponDO);
-        stateMachine.fire(id, context);
+            stateMachine.fire(id, context);
+
+        Object currentState = stateMachine.getCurrentState();
+        log.info("--------currentState:{}", currentState);
+
 
     }
 }

@@ -28,6 +28,7 @@ public class CouponGuard implements Guard<States, Events> {
             RuntimeException exception = new RuntimeException("123");
 //            context.getMessageHeaders().put("exception", exception);
             context =  new DefaultStateContext<States, Events>( context.getStage(), context.getMessage(), context.getMessageHeaders(), context.getExtendedState(), context.getTransition(), context.getStateMachine(), context.getSource(), context.getTarget(), exception);
+            log.info("------CouponGuard end-------{}", context.toString());
 
         }
         return false;

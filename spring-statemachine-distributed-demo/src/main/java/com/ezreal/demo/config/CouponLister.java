@@ -65,8 +65,8 @@ public class CouponLister extends StateMachineListenerAdapter<States, Events> {
     @Override
     public void stateMachineError(StateMachine<States, Events> stateMachine, Exception exception) {
         log.info("----stateMachineError----");
-//        stateMachine.setStateMachineError(exception);
-        throw new RuntimeException(exception);
+        stateMachine.setStateMachineError(exception);
+//        throw new RuntimeException(exception);
     }
 
     @Override

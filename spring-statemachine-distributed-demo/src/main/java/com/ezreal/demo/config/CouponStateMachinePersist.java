@@ -31,6 +31,8 @@ public class CouponStateMachinePersist implements StateMachinePersist<States, Ev
 //            throw new RuntimeException(exception);
 //        }
 
+        log.info("------CouponStateMachinePersist#write----{}",context.toString());
+
         CouponDO couponDO = couponDao.selectById(contextObj.getCouponCode());
         couponDO.setCouponStatus(context.getState().name());
         couponDao.updateById(couponDO);

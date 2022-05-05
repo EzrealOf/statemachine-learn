@@ -77,7 +77,7 @@ public class StateMachineConfig {
                 .withExternal()
                 .source(States.USED).target(States.END)
                 .guard(couponGuard)
-                .action(pageviewAction())
+                .action(couponAction)
                 .event(Events.END)
 
 
@@ -85,7 +85,7 @@ public class StateMachineConfig {
                 .withExternal()
                 .source(States.USED).target(States.UN_USED)
                 .guard(couponGuard)
-                .action(pageviewAction())
+                .action(couponAction)
                 .event(Events.ROLLBACK);
                 // TODO: 2022/4/28 对于选择的 并不是事件触发的 那其实可以通过参数来调用不同的事件来触发
 
