@@ -55,7 +55,12 @@ public class CouponStatemachine extends AbstractStateMachine<CouponStatemachine,
         }
     }
 
-
+    @Override
+    protected void afterTransitionDeclined(States fromState, Events event, CouponContext context) {
+        StringBuilder sb = new StringBuilder();
+        sb.append("不被允许的状态流转").append(fromState.name()).append("在事件").append(event.name());
+        throw new RuntimeException(sb.toString());
+    }
 
     @Override
     protected void afterTransitionCompleted(States fromState, States toState, Events event, CouponContext context) {
@@ -67,8 +72,6 @@ public class CouponStatemachine extends AbstractStateMachine<CouponStatemachine,
         CouponDO couponDO = couponDao.selectById(context.getCouponCode());
         couponDO.setCouponStatus(toState.name());
         couponDao.updateById(couponDO);
-//        throw new RuntimeException("123");
 
-//        super.afterTransitionCompleted(fromState, toState, event, context);
     }
 }

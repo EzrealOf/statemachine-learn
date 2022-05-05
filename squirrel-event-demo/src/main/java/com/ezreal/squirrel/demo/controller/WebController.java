@@ -61,10 +61,11 @@ public class WebController {
                 default:
                     break;
             }
-        } catch (Exception e) {
-            dataSourceTransactionManager.rollback(transaction);
-        } finally {
             dataSourceTransactionManager.commit(transaction);
+
+        } catch (Exception e) {
+            log.info("rollback 事务");
+            dataSourceTransactionManager.rollback(transaction);
         }
 
         return "ok";
