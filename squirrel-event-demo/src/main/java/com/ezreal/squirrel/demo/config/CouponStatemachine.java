@@ -7,8 +7,10 @@ import com.ezreal.squirrel.demo.eunms.Events;
 import com.ezreal.squirrel.demo.eunms.States;
 import com.ezreal.squirrel.demo.util.ContextUtil;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.stereotype.Component;
 import org.squirrelframework.foundation.fsm.annotation.StateMachineParameters;
@@ -20,8 +22,10 @@ import java.lang.reflect.InvocationTargetException;
 
 @Slf4j
 @StateMachineParameters(stateType = States.class, eventType = Events.class, contextType = CouponContext.class)
-public class CouponStatemachine extends AbstractStateMachine<CouponStatemachine, States ,Events, CouponContext> {
+public class CouponStatemachine extends AbstractStateMachine<CouponStatemachine, States ,Events, CouponContext> implements ApplicationContextAware {
 
+
+    private static ApplicationContext applicationContext;
 
 
 
@@ -73,5 +77,10 @@ public class CouponStatemachine extends AbstractStateMachine<CouponStatemachine,
         couponDO.setCouponStatus(toState.name());
         couponDao.updateById(couponDO);
 
+    }
+
+    @Override
+    public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
+        this.applicationContext = applicationContext;
     }
 }
